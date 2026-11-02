@@ -10,7 +10,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from rst.env import StressEnv, sample_scales, run_path, POSITION_NAMES
+from rst.env import StressEnv, sample_scales, run_path, day_cost, POSITION_NAMES
 from rst.ppo import ActorCritic, rollout
 from rst import baselines as bl
 
@@ -62,7 +62,7 @@ def trace(scales, Z):
         lv.append([env.S.item(), env.Q.item(), env.y.item(), env.v.item()])
         cum.append(cum[-1] + l.item())
         attr.append(env.last_loss_by_position[0].tolist())
-    return np.array(lv), np.array(cum), np.array(attr), (Z[0] ** 2).sum(-1).numpy()
+    return np.array(lv), np.array(cum), np.array(attr), day_cost(Z[0]).numpy()
 
 
 # --------------------------------------------------------------- base portfolio
@@ -75,7 +75,7 @@ for name, m in bl.HISTORICAL.items():
     L, k, Zh = bl.historical_rescaled(env, base, m)
     hist[name] = (L.item(), k)
 worst_hist = max(hist, key=lambda n: hist[n][0])
-res["Historical (worst of 5, rescaled)"] = hist[worst_hist][0]
+res["Historical (worst of 9, rescaled)"] = hist[worst_hist][0]
 (v, Z), times["Static worst case (day-1 shock)"] = timed(lambda: bl.gradient_worst(env, base, static=True))
 res["Static worst case (day-1 shock)"] = v.item()
 (v, Z), times["RL policy (1 rollout)"] = timed(lambda: rl_attack(base))
@@ -85,7 +85,7 @@ res["RL policy (best of 256)"] = v.item(); paths["RL best"] = Z
 (v, Z), times["Gradient oracle (full path)"] = timed(lambda: bl.gradient_worst(env, base))
 res["Gradient oracle (full path)"] = v.item(); paths["Oracle"] = Z
 
-print("\nBase portfolio: loss at the 99% plausibility budget ($m)")
+print("\nBase portfolio: loss at the empirical 99% plausibility budget ($m)")
 for k, v in res.items():
     print(f"  {k:36s} {v:7.2f}   {times.get(k, float('nan')):7.2f}s")
 print("  historical detail:", {k: (round(a, 2), round(b, 2)) for k, (a, b) in hist.items()})
@@ -105,7 +105,7 @@ hist_l = torch.stack([bl.scenario_path(env, test, m, hist[n][1])[0] for n, m in 
 fixed, _ = run_path(env, test, paths["Oracle"].expand(N, -1, -1))
 held_out = {
     "Monte Carlo (20k paths)": (mc, t_mc),
-    "Historical (worst of 5, rescaled)": (hist_l, 0.0),
+    "Historical (worst of 9, rescaled)": (hist_l, 0.0),
     "Fixed crash scenario (base book's worst)": (fixed, 0.0),
     "Static worst case (day-1 shock)": (st, t_st),
     "RL policy (1 rollout)": (rl1, t_rl1),
@@ -116,6 +116,7 @@ print(f"\n{N} held-out portfolios")
 held_summary = {}
 for k, (v, t) in held_out.items():
     s = {"mean_loss": v.mean().item(), "mean_pct_of_oracle": (v / orc).mean().item() * 100,
+         "median_pct_of_oracle": (v / orc).median().item() * 100,
          "beats_mc_pct": (v > mc).double().mean().item() * 100,
          "beats_hist_pct": (v > hist_l).double().mean().item() * 100,
          "ms_per_portfolio": t / N * 1000}
@@ -135,7 +136,7 @@ cols = [C[0] if k.startswith("RL") else "#a3a29d" for k in order]
 ax.barh(order, [res[k] for k in order], color=cols, height=0.62)
 for i, k in enumerate(order):
     ax.text(res[k] + 0.8, i, f"${res[k]:.1f}m", va="center", color=INK, fontsize=9)
-ax.set_xlabel("10-day loss at equal plausibility (99% likelihood budget), $m")
+ax.set_xlabel("10-day loss at equal plausibility (empirical 99% budget), $m")
 ax.set_title("Worst plausible loss found, base portfolio")
 ax.grid(axis="y", visible=False)
 ax.set_xlim(0, max(res.values()) * 1.15)
@@ -146,7 +147,7 @@ lv_rl, cum_rl, attr_rl, sp_rl = trace(base, paths["RL"])
 lv_mc, cum_mc, attr_mc, sp_mc = trace(base, paths["Monte Carlo"])
 days = np.arange(env.cfg.T + 1)
 fig, axs = plt.subplots(2, 3, figsize=(12, 6.2))
-panels = [(0, "Index level", 1.0), (1, "Tech stock level", 1.0), (2, "10y yield (%)", 100.0), (3, "Index implied vol (%)", 100.0)]
+panels = [(0, "S&P 500 (rebased to 100)", 1.0), (1, "QQQ (rebased to 100)", 1.0), (2, "10y yield (%)", 100.0), (3, "VIX", 100.0)]
 for ax, (j, title, mult) in zip(axs.flat[:4], panels):
     ax.plot(days, lv_rl[:, j] * mult, color=C[0], lw=2, marker="o", ms=4, label="RL scenario")
     ax.plot(days, lv_mc[:, j] * mult, color=C[1], lw=2, marker="o", ms=4, label="Monte Carlo worst")
@@ -159,7 +160,7 @@ ax.set_title("Cumulative loss ($m)"); ax.set_xlabel("Day")
 ax = axs.flat[5]
 ax.bar(days[1:] - 0.2, sp_rl, width=0.4, color=C[0], label="RL scenario")
 ax.bar(days[1:] + 0.2, sp_mc, width=0.4, color=C[1], label="Monte Carlo worst")
-ax.set_title("Plausibility budget spent per day (‖z‖²)"); ax.set_xlabel("Day")
+ax.set_title("Plausibility budget spent per day"); ax.set_xlabel("Day")
 fig.suptitle("How the RL adversary builds its scenario (base portfolio, same plausibility budget)",
              x=0.01, ha="left", fontweight="bold", color=INK)
 fig.tight_layout(); fig.savefig(f"{OUT}/fig2_scenario_anatomy.png", dpi=160); plt.close(fig)

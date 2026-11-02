@@ -1,0 +1,198 @@
+{
+  "sample": {
+    "start": "2000-01-03",
+    "end": "2026-10-29",
+    "n_days": 6698
+  },
+  "params": {
+    "idx_vol_scale": 0.803007,
+    "tech_vol_scale": 1.185016,
+    "yield_daily_vol": 0.000578,
+    "volvol_daily": 0.071841
+  },
+  "corr": [
+    [
+      1.0,
+      0.85,
+      0.255,
+      -0.7939
+    ],
+    [
+      0.85,
+      1.0,
+      0.198,
+      -0.6513
+    ],
+    [
+      0.255,
+      0.198,
+      1.0,
+      -0.2222
+    ],
+    [
+      -0.7939,
+      -0.6513,
+      -0.2222,
+      1.0
+    ]
+  ],
+  "factors": [
+    "idx",
+    "tech",
+    "y10",
+    "vol"
+  ],
+  "initial_state": {
+    "as_of": "2026-10-29",
+    "vix": 17.200000762939453,
+    "y10": 0.049800000000000004
+  },
+  "student_t_nu": 5.1999999999999895,
+  "budget": 132.83869971108754,
+  "eps_cap": [
+    6.266,
+    6.953,
+    8.822,
+    10.694
+  ],
+  "raw_daily_cap": [
+    0.127652,
+    0.155653,
+    0.0051,
+    0.768245
+  ],
+  "ten_day_range": {
+    "idx": [
+      -0.299547,
+      0.195882
+    ],
+    "tech": [
+      -0.309222,
+      0.349602
+    ],
+    "y10": [
+      -0.01,
+      0.0082
+    ]
+  },
+  "vix_range": [
+    9.14,
+    82.69
+  ],
+  "tails": {
+    "excess_kurtosis": {
+      "idx": 1.27,
+      "tech": 2.52,
+      "y10": 2.39,
+      "vol": 6.67
+    },
+    "pct_daily_moves_beyond_3sd": {
+      "idx": 0.76,
+      "tech": 1.28,
+      "y10": 1.0,
+      "vol": 1.4
+    },
+    "gaussian_pct_beyond_3sd": 0.27
+  },
+  "budget_backtest": {
+    "gaussian_chi2_budget_99pct": 63.690739751564465,
+    "pct_10d_windows_over_gaussian_budget": 11.509715994020926,
+    "student_t_nu": 5.1999999999999895,
+    "loglik_gain_t_vs_gaussian": 1653.5758280942318,
+    "budget_99pct": 132.83869971108754,
+    "pct_10d_windows_over_budget": 1.195814648729447,
+    "n_nonoverlapping_windows": 669
+  },
+  "historical_scenarios": {
+    "Sep-2001 9/11 reopening": {
+      "start": "2001-09-04",
+      "end": "2001-09-24",
+      "index_pct": -11.43,
+      "tech_pct": -16.52,
+      "yield_bp": -26.0,
+      "vix_start": 25.85,
+      "vix_end": 37.75,
+      "model_cost": 80.7
+    },
+    "Jul-2002 dot-com bottom": {
+      "start": "2002-07-09",
+      "end": "2002-07-23",
+      "index_pct": -16.28,
+      "tech_pct": -9.16,
+      "yield_bp": -31.0,
+      "vix_start": 30.22,
+      "vix_end": 44.92,
+      "model_cost": 86.3
+    },
+    "Oct-2008 GFC": {
+      "start": "2008-09-26",
+      "end": "2008-10-10",
+      "index_pct": -25.88,
+      "tech_pct": -23.76,
+      "yield_bp": 4.0,
+      "vix_start": 34.74,
+      "vix_end": 69.95,
+      "model_cost": 133.0
+    },
+    "Aug-2011 US downgrade": {
+      "start": "2011-07-25",
+      "end": "2011-08-08",
+      "index_pct": -16.3,
+      "tech_pct": -14.95,
+      "yield_bp": -63.0,
+      "vix_start": 19.35,
+      "vix_end": 48.0,
+      "model_cost": 101.9
+    },
+    "Aug-2015 China deval": {
+      "start": "2015-08-11",
+      "end": "2015-08-25",
+      "index_pct": -10.39,
+      "tech_pct": -10.94,
+      "yield_bp": -3.0,
+      "vix_start": 13.71,
+      "vix_end": 36.02,
+      "model_cost": 98.1
+    },
+    "Feb-2018 Volmageddon": {
+      "start": "2018-01-25",
+      "end": "2018-02-08",
+      "index_pct": -9.1,
+      "tech_pct": -8.85,
+      "yield_bp": 22.0,
+      "vix_start": 11.58,
+      "vix_end": 33.46,
+      "model_cost": 140.8
+    },
+    "Mar-2020 COVID": {
+      "start": "2020-03-04",
+      "end": "2020-03-18",
+      "index_pct": -23.39,
+      "tech_pct": -19.07,
+      "yield_bp": 16.0,
+      "vix_start": 31.99,
+      "vix_end": 76.45,
+      "model_cost": 170.7
+    },
+    "2022 rates shock": {
+      "start": "2022-06-02",
+      "end": "2022-06-16",
+      "index_pct": -12.21,
+      "tech_pct": -13.67,
+      "yield_bp": 36.0,
+      "vix_start": 24.72,
+      "vix_end": 32.95,
+      "model_cost": 104.9
+    },
+    "Apr-2025 tariff shock": {
+      "start": "2025-03-25",
+      "end": "2025-04-08",
+      "index_pct": -13.74,
+      "tech_pct": -15.69,
+      "yield_bp": -5.0,
+      "vix_start": 17.15,
+      "vix_end": 52.33,
+      "model_cost": 96.1
+    }
+  }
+}

@@ -1,19 +1,19 @@
 
-Base portfolio: loss at the 99% plausibility budget ($m)
-  Monte Carlo (100k paths)               31.89      0.46s
-  Historical (worst of 5, rescaled)      40.15       nans
-  Static worst case (day-1 shock)        20.40      9.26s
-  RL policy (1 rollout)                  76.71      0.01s
-  RL policy (best of 256)                76.72      0.02s
-  Gradient oracle (full path)            76.74      7.89s
-  historical detail: {'Oct-2008 crash': (38.85, 1.39), 'Aug-2015 deval': (37.21, 1.94), 'Feb-2018 Volmageddon': (38.27, 2.08), 'Mar-2020 COVID': (30.98, 1.01), '2022 rates shock': (40.15, 1.92)}
+Base portfolio: loss at the empirical 99% plausibility budget ($m)
+  Monte Carlo (100k paths)               36.31      0.66s
+  Historical (worst of 9, rescaled)      44.99       nans
+  Static worst case (day-1 shock)        20.11     12.27s
+  RL policy (1 rollout)                  91.56      0.02s
+  RL policy (best of 256)                91.67      0.03s
+  Gradient oracle (full path)            93.56     10.27s
+  historical detail: {'Sep-2001 9/11 reopening': (30.51, 2.6), 'Jul-2002 dot-com bottom': (15.62, 1.19), 'Oct-2008 GFC': (30.9, 0.94), 'Aug-2011 US downgrade': (33.38, 1.77), 'Aug-2015 China deval': (41.57, 1.99), 'Feb-2018 Volmageddon': (39.58, 1.67), 'Mar-2020 COVID': (35.76, 1.21), '2022 rates shock': (33.58, 1.7), 'Apr-2025 tariff shock': (44.99, 1.76)}
 
 100 held-out portfolios
-  Monte Carlo (20k paths)              mean $ 12.75m   43.7% of oracle  beats MC   0.0%      72.3 ms/portfolio
-  Historical (worst of 5, rescaled)    mean $  8.08m   -0.2% of oracle  beats MC  46.0%       0.0 ms/portfolio
-  Fixed crash scenario (base book's worst) mean $ -0.23m  -71.0% of oracle  beats MC  43.0%       0.0 ms/portfolio
-  Static worst case (day-1 shock)      mean $ 10.29m   36.4% of oracle  beats MC  24.0%     134.3 ms/portfolio
-  RL policy (1 rollout)                mean $ 30.63m   97.0% of oracle  beats MC 100.0%       0.2 ms/portfolio
-  RL policy (best of 64)               mean $ 30.75m   97.7% of oracle  beats MC 100.0%       1.2 ms/portfolio
-  Gradient oracle (full path)          mean $ 31.18m  100.0% of oracle  beats MC 100.0%     132.7 ms/portfolio
+  Monte Carlo (20k paths)              mean $ 13.86m   35.7% of oracle  beats MC   0.0%      94.9 ms/portfolio
+  Historical (worst of 9, rescaled)    mean $ 10.54m    8.6% of oracle  beats MC  44.0%       0.0 ms/portfolio
+  Fixed crash scenario (base book's worst) mean $  8.71m  -76.7% of oracle  beats MC  51.0%       0.0 ms/portfolio
+  Static worst case (day-1 shock)      mean $  8.67m   18.3% of oracle  beats MC   8.0%     167.6 ms/portfolio
+  RL policy (1 rollout)                mean $ 39.69m   86.4% of oracle  beats MC  99.0%       0.2 ms/portfolio
+  RL policy (best of 64)               mean $ 40.09m   87.7% of oracle  beats MC 100.0%       1.3 ms/portfolio
+  Gradient oracle (full path)          mean $ 44.75m  100.0% of oracle  beats MC 100.0%     168.0 ms/portfolio
 figures written
