@@ -173,15 +173,14 @@ ax.set_yticks(y, POSITION_NAMES); ax.invert_yaxis()
 ax.axvline(0, color=INK2, lw=0.8); ax.grid(axis="y", visible=False)
 ax.set_xlabel("Loss contribution, $m (negative = gain)")
 ax.set_title("Where the loss comes from")
-ax.legend(frameon=False, fontsize=9, loc="lower right")
+ax.legend(frameon=False, fontsize=9, loc="center right")
 fig.tight_layout(); fig.savefig(f"{OUT}/fig3_attribution.png", dpi=160); plt.close(fig)
 
 # 4. Held-out generalization: RL vs oracle, MC vs oracle
 fig, ax = plt.subplots(figsize=(6, 5.4))
 lo = min(0.0, mc.min().item(), fixed.min().item()) * 1.08
 lim = [lo, orc.max().item() * 1.08]
-ax.plot(lim, lim, color=INK2, lw=0.8, ls="--")
-ax.text(lim[1] * 0.97, lim[1] * 0.90, "= oracle", ha="right", color=INK2, fontsize=9)
+ax.plot(lim, lim, color=INK2, lw=0.8, ls="--", label="Matches oracle")
 ax.axhline(0, color=INK2, lw=0.6)
 ax.scatter(orc, fixed, s=26, color=C[2], edgecolor="#fcfcfb", lw=1, label="Fixed crash scenario")
 ax.scatter(orc, mc, s=26, color=C[1], edgecolor="#fcfcfb", lw=1, label="Monte Carlo worst (20k)")

@@ -1,0 +1,91 @@
+{
+  "base_portfolio": {
+    "Monte Carlo (100k paths)": 31.886764696759162,
+    "Historical (worst of 5, rescaled)": 40.146800177784804,
+    "Static worst case (day-1 shock)": 20.39646868724884,
+    "RL policy (1 rollout)": 76.71091604232788,
+    "RL policy (best of 256)": 76.7189712524414,
+    "Gradient oracle (full path)": 76.74156576609965
+  },
+  "base_times_s": {
+    "Monte Carlo (100k paths)": 0.4623229503631592,
+    "Static worst case (day-1 shock)": 9.257991075515747,
+    "RL policy (1 rollout)": 0.014204740524291992,
+    "RL policy (best of 256)": 0.021788597106933594,
+    "Gradient oracle (full path)": 7.892129898071289
+  },
+  "historical_detail": {
+    "Oct-2008 crash": {
+      "loss": 38.852011370139635,
+      "scale": 1.3892722433734361
+    },
+    "Aug-2015 deval": {
+      "loss": 37.211884377705,
+      "scale": 1.9402572948963703
+    },
+    "Feb-2018 Volmageddon": {
+      "loss": 38.266813159952775,
+      "scale": 2.0764802869318366
+    },
+    "Mar-2020 COVID": {
+      "loss": 30.975883757496558,
+      "scale": 1.0054836439925952
+    },
+    "2022 rates shock": {
+      "loss": 40.146800177784804,
+      "scale": 1.9156533872957748
+    }
+  },
+  "held_out": {
+    "Monte Carlo (20k paths)": {
+      "mean_loss": 12.751684398269628,
+      "mean_pct_of_oracle": 43.71027013458912,
+      "beats_mc_pct": 0.0,
+      "beats_hist_pct": 54.0,
+      "ms_per_portfolio": 72.31269598007202
+    },
+    "Historical (worst of 5, rescaled)": {
+      "mean_loss": 8.075865443078676,
+      "mean_pct_of_oracle": -0.21709291832345737,
+      "beats_mc_pct": 46.0,
+      "beats_hist_pct": 0.0,
+      "ms_per_portfolio": 0.0
+    },
+    "Fixed crash scenario (base book's worst)": {
+      "mean_loss": -0.23044009629117285,
+      "mean_pct_of_oracle": -71.04900829906197,
+      "beats_mc_pct": 43.0,
+      "beats_hist_pct": 42.0,
+      "ms_per_portfolio": 0.0
+    },
+    "Static worst case (day-1 shock)": {
+      "mean_loss": 10.292074913303981,
+      "mean_pct_of_oracle": 36.4095046532848,
+      "beats_mc_pct": 24.0,
+      "beats_hist_pct": 49.0,
+      "ms_per_portfolio": 134.31055545806885
+    },
+    "RL policy (1 rollout)": {
+      "mean_loss": 30.628802816444075,
+      "mean_pct_of_oracle": 97.04609865730741,
+      "beats_mc_pct": 100.0,
+      "beats_hist_pct": 100.0,
+      "ms_per_portfolio": 0.18159866333007812
+    },
+    "RL policy (best of 64)": {
+      "mean_loss": 30.746381767299027,
+      "mean_pct_of_oracle": 97.72593484285798,
+      "beats_mc_pct": 100.0,
+      "beats_hist_pct": 100.0,
+      "ms_per_portfolio": 1.2365245819091797
+    },
+    "Gradient oracle (full path)": {
+      "mean_loss": 31.175070179284404,
+      "mean_pct_of_oracle": 100.0,
+      "beats_mc_pct": 100.0,
+      "beats_hist_pct": 100.0,
+      "ms_per_portfolio": 132.66337156295776
+    }
+  },
+  "budget": 63.690739751564465
+}
